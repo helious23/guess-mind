@@ -14,5 +14,8 @@ module.exports = {
     "no-console": "off",
     "spaced-comment": "off",
     "no-else-return": "off",
+    "no-param-reassign": "off",
+    "no-unused-vars": "off",
+    "import/prefer-default-export": "off",
   },
 };
