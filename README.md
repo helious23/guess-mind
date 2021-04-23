@@ -6,5 +6,5 @@ Realtime game build with Socket.io NodeJS Gulp
 - [x] Server
 - [x] Pug
 - [x] Static
-- [ ] eslint
-- [ ] SocketIO
+- [x] Eslint
+- [x] SocketIO
