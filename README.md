@@ -1,2 +1,9 @@
 # GuessMind
-Realtime game by NodeJS
+
+Realtime game build with Socket.io NodeJS Gulp
+
+## To Do :
+- [ ] Server
+- [ ] Pug
+- [ ] Static
+- [ ] SocketIO
