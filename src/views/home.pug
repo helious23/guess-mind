@@ -6,12 +6,14 @@ html(lang="en")
         link(rel="stylesheet", href="/styles/styles.css")
         title Guess Mind
     body
-        .loginBox#jsLogin
-            form
+        .loginBox
+            form#jsLogin
                 input(placeholder="What is your nickname", type="text")
         .gameContainer#jsGame 
-            h1 You are logged in
-            div#jsNotifications
+            .chat
+                ul.chat__messages#jsMessages
+                form.chat__form#jsSendMsg
+                    input(placeholder="Write a message", type="text")
         script.
             window.events = !{events}
         script(src="/socket.io/socket.io.js") 
