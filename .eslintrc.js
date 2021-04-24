@@ -17,5 +17,6 @@ module.exports = {
     "no-param-reassign": "off",
     "no-unused-vars": "off",
     "import/prefer-default-export": "off",
+    "no-shadow": "off",
   },
 };
