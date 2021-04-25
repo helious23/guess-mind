@@ -1,15 +1,24 @@
 import events from "./events";
 
-const socketController = (socket) => {
+let sockets = [];
+
+const socketController = (socket, io) => {
   const broadcast = (event, data) => socket.broadcast.emit(event, data);
+  const superBroadcast = (event, data) => io.emit(event, data); // io 를 사용하여 자기 socket 을 포함한 모든 socket 에게 알림(공지사항)
+  const sendPlayerUpdate = () =>
+    superBroadcast(events.playerUpdate, { sockets });
 
   socket.on(events.setNickname, ({ nickname }) => {
-    broadcast(events.newUser, { nickname });
     socket.nickname = nickname;
+    sockets.push({ id: socket.id, points: 0, nickname }); // 필요시 DB에 저장
+    broadcast(events.newUser, { nickname });
+    sendPlayerUpdate();
   });
-  socket.on(events.disconnect, () =>
-    broadcast(events.disconnected, { nickname: socket.nickname })
-  );
+  socket.on(events.disconnect, () => {
+    sockets = sockets.filter((aSocket) => aSocket.id !== socket.id);
+    broadcast(events.disconnected, { nickname: socket.nickname });
+    sendPlayerUpdate();
+  });
   socket.on(events.sendMsg, ({ message }) =>
     broadcast(events.newMsg, { message, nickname: socket.nickname })
   );
