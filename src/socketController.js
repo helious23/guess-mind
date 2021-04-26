@@ -5,7 +5,7 @@ let sockets = [];
 let inProgress = false;
 let word = null;
 
-const chooseLeader = () => sockets[Math.floor(Math.random * sockets.length)];
+const chooseLeader = () => sockets[Math.floor(Math.random() * sockets.length)];
 
 const socketController = (socket, io) => {
   const broadcast = (event, data) => socket.broadcast.emit(event, data);
@@ -17,7 +17,13 @@ const socketController = (socket, io) => {
       inProgress = true;
       const leader = chooseLeader();
       word = chooseWords();
+      io.to(leader.id).emit(events.leaderNotif, { word }); // leader 에게만 word 전달 by io.to(socket.id).emit(event, data)
+      setTimeout(() => superBroadcast(events.gameStarted), 2000);
     }
+  };
+
+  const endGame = () => {
+    inProgress = false;
   };
 
   socket.on(events.setNickname, ({ nickname }) => {
@@ -25,10 +31,15 @@ const socketController = (socket, io) => {
     sockets.push({ id: socket.id, points: 0, nickname }); // 필요시 DB에 저장
     broadcast(events.newUser, { nickname });
     sendPlayerUpdate();
-    startGame();
+    if (sockets.length === 2) {
+      startGame();
+    }
   });
   socket.on(events.disconnect, () => {
     sockets = sockets.filter((aSocket) => aSocket.id !== socket.id);
+    if (sockets.length === 1) {
+      endGame();
+    }
     broadcast(events.disconnected, { nickname: socket.nickname });
     sendPlayerUpdate();
   });
