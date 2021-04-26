@@ -1,3 +1,4 @@
+import { disablerChat } from "./chat";
 import {
   disableCanvas,
   enableCanvas,
@@ -23,6 +24,7 @@ const setNotifs = (text) => {
 };
 
 export const handlePlayerUpdate = ({ sockets }) => addPlayers(sockets);
+
 export const handleGameStarted = () => {
   setNotifs("");
   disableCanvas();
@@ -31,6 +33,7 @@ export const handleGameStarted = () => {
 export const handleLeaderNotif = ({ word }) => {
   enableCanvas();
   showControls();
+  disablerChat();
   setNotifs(`You are the leader, paint: ${word}`);
 };
 export const handleGameEnded = () => {
@@ -39,3 +42,5 @@ export const handleGameEnded = () => {
   hideControls();
   resetCanvas();
 };
+
+export const handleGameStarting = () => setNotifs("Game will start soon");
