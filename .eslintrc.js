@@ -18,5 +18,6 @@ module.exports = {
     "no-unused-vars": "off",
     "import/prefer-default-export": "off",
     "no-shadow": "off",
+    "no-use-before-define": "off",
   },
 };
