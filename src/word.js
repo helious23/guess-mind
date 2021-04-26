@@ -93,4 +93,4 @@ const words = [
 ];
 
 export const chooseWords = () =>
-  chooseWords[Math.floor(Math.random() * words.length)];
+  words[Math.floor(Math.random() * words.length)];
